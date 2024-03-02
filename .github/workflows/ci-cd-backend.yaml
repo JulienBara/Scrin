@@ -36,7 +36,7 @@ jobs:
         working-directory: ./backend
         uses: actions/upload-artifact@v3
         with:
-          name: backend
+          name: scrin-backend
           path: release.zip
 
   deploy:
@@ -50,7 +50,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: node-app
+          name: scrin-backend
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
@@ -59,7 +59,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tototoasdkajsdlk'
+          app-name: 'scrin-backend'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_1234 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5BC9323FE4B3433A800F5C311C26B49B  }}
           package: .
