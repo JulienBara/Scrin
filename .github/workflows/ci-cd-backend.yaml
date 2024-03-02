@@ -35,7 +35,7 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: scrin-backend
+          name: backend/scrin-backend
           path: release.zip
 
   deploy:
