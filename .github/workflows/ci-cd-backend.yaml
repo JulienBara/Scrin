@@ -33,7 +33,6 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
-        working-directory: ./backend
         uses: actions/upload-artifact@v3
         with:
           name: scrin-backend
