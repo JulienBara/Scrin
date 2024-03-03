@@ -10,6 +10,7 @@ export class GaufresController {
     const gaufres = await this.gaufresService.fetchTodaysGaufres();
 
     return gaufres.map((gaufre) => ({
+      id: gaufre.id,
       name: gaufre.name,
     }));
   }
