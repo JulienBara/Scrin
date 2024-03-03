@@ -3,7 +3,7 @@ import type { Container } from '@azure/cosmos';
 import { Device } from './devices.entity';
 import { DeviceDTO } from './devices.dto';
 import { InjectModel } from '@nestjs/azure-database';
-import { GaufresService } from 'src/gaufres/gaufres.service';
+import { GaufresService } from '../gaufres/gaufres.service';
 
 @Controller('devices')
 export class DevicesController {

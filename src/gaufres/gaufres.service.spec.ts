@@ -6,7 +6,14 @@ describe('GaufresService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GaufresService],
+      providers: [
+        GaufresService,
+        {
+          // https://github.com/nestjs/azure-database/issues/830
+          provide: `GaufreAzureCosmosDbModel`,
+          useValue: jest.mocked({}),
+        },
+      ],
     }).compile();
 
     service = module.get<GaufresService>(GaufresService);

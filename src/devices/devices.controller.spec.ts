@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DevicesController } from './devices.controller';
+import { GaufresService } from '../gaufres/gaufres.service';
 
 describe('DevicesController', () => {
   let controller: DevicesController;
@@ -11,6 +12,10 @@ describe('DevicesController', () => {
         {
           // https://github.com/nestjs/azure-database/issues/830
           provide: `DeviceAzureCosmosDbModel`,
+          useValue: jest.mocked({}),
+        },
+        {
+          provide: GaufresService,
           useValue: jest.mocked({}),
         },
       ],
