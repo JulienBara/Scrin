@@ -10,6 +10,27 @@ export class GaufresService {
     private readonly devicesContainer: Container,
   ) {}
 
+  async fetchTodaysGaufres() {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0);
+
+    const querySpec = {
+      query: 'SELECT * FROM Gaufres g WHERE g.lastHeartbeat > @today',
+      parameters: [
+        {
+          name: '@today',
+          value: today.toISOString(),
+        },
+      ],
+    };
+
+    const { resources: gaufres } = await this.devicesContainer.items
+      .query<Gaufre>(querySpec)
+      .fetchAll();
+
+    return gaufres;
+  }
+
   async heartbeatGaufre(deviceAddress): Promise<void> {
     const querySpec = {
       query: 'SELECT * FROM Gaufres g WHERE g.deviceAddress = @deviceAddress',
