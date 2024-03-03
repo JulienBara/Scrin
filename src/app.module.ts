@@ -14,6 +14,7 @@ import { Device } from './devices/devices.entity';
       url: process.env.MONGODB_CONNECTION_STRING,
       database: process.env.MONGODB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      retryWrites: false,
       ssl: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
