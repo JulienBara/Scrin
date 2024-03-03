@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DevicesController } from './devices/devices.controller';
 import { ConfigModule } from '@nestjs/config';
-import { Device } from './devices/devices.entity';
 import { AzureCosmosDbModule } from '@nestjs/azure-database';
 import { GaufresModule } from './gaufres/gaufres.module';
+import { DevicesModule } from './devices/devices.module';
 
 @Module({
   imports: [
@@ -16,14 +15,10 @@ import { GaufresModule } from './gaufres/gaufres.module';
       key: process.env.AZURE_COSMOS_DB_KEY,
       retryAttempts: 1,
     }),
-    AzureCosmosDbModule.forFeature([
-      {
-        dto: Device,
-      },
-    ]),
+    DevicesModule,
     GaufresModule,
   ],
-  controllers: [AppController, DevicesController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
