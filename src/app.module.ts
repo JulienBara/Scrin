@@ -5,6 +5,7 @@ import { DevicesController } from './devices/devices.controller';
 import { ConfigModule } from '@nestjs/config';
 import { Device } from './devices/devices.entity';
 import { AzureCosmosDbModule } from '@nestjs/azure-database';
+import { GaufresModule } from './gaufres/gaufres.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AzureCosmosDbModule } from '@nestjs/azure-database';
         dto: Device,
       },
     ]),
+    GaufresModule,
   ],
   controllers: [AppController, DevicesController],
   providers: [AppService],
