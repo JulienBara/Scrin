@@ -3,23 +3,23 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DevicesController } from './devices/devices.controller';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { Device } from './devices/devices.entity';
+import { AzureCosmosDbModule } from '@nestjs/azure-database';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: process.env.MONGODB_CONNECTION_STRING,
-      database: process.env.MONGODB_DATABASE,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      retryWrites: false,
-      ssl: true,
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
+    AzureCosmosDbModule.forRoot({
+      dbName: process.env.AZURE_COSMOS_DB_NAME,
+      endpoint: process.env.AZURE_COSMOS_DB_ENDPOINT,
+      key: process.env.AZURE_COSMOS_DB_KEY,
+      retryAttempts: 1,
     }),
-    TypeOrmModule.forFeature([Device]),
+    AzureCosmosDbModule.forFeature([
+      {
+        dto: Device,
+      },
+    ]),
   ],
   controllers: [AppController, DevicesController],
   providers: [AppService],

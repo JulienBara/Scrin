@@ -1,35 +1,23 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Body, Controller, Post } from '@nestjs/common';
+import type { Container } from '@azure/cosmos';
 import { Device } from './devices.entity';
-import { MongoRepository } from 'typeorm';
+import { DeviceDTO } from './devices.dto';
+import { InjectModel } from '@nestjs/azure-database';
 
 @Controller('devices')
 export class DevicesController {
   constructor(
-    @InjectRepository(Device)
-    private readonly devicesRepository: MongoRepository<Device>,
+    @InjectModel(Device)
+    private readonly devicesContainer: Container,
   ) {}
 
   @Post('heartbeat')
-  async createDevice(@Body() device: Partial<Device>): Promise<void> {
-    if (!device || !device.address || !device.name) {
-      throw new BadRequestException(`A device must have an address and a name`);
-    }
-    const deviceFromDb = await this.devicesRepository.findOne({
-      where: { address: device.address },
+  async createDevice(@Body() deviceDto: DeviceDTO): Promise<void> {
+    await this.devicesContainer.items.upsert<Device>({
+      id: deviceDto.address,
+      name: deviceDto.name,
+      lastHeartbeat: new Date(),
     });
-
-    if (deviceFromDb === null) {
-      await this.devicesRepository.save(
-        new Device({
-          ...device,
-          lastHeartbeat: new Date(),
-        }),
-      );
-    } else {
-      deviceFromDb.lastHeartbeat = new Date();
-      await this.devicesRepository.save(deviceFromDb);
-    }
 
     return;
   }

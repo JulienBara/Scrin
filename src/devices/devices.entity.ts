@@ -1,13 +1,9 @@
-import { Entity, ObjectId, ObjectIdColumn, Column } from 'typeorm';
+import { CosmosDateTime, CosmosPartitionKey } from '@nestjs/azure-database';
 
-@Entity('devices')
+@CosmosPartitionKey('id')
 export class Device {
-  @ObjectIdColumn() id: ObjectId;
-  @Column() name: string;
-  @Column() address: string;
-  @Column() lastHeartbeat: Date;
-
-  constructor(device?: Partial<Device>) {
-    Object.assign(this, device);
-  }
+  // the address
+  id: string;
+  name: string;
+  @CosmosDateTime() lastHeartbeat: Date;
 }

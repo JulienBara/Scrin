@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DevicesController } from './devices.controller';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Device } from './devices.entity';
-import { Repository } from 'typeorm';
 
 describe('DevicesController', () => {
   let controller: DevicesController;
@@ -11,7 +8,11 @@ describe('DevicesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [DevicesController],
       providers: [
-        { provide: getRepositoryToken(Device), useClass: Repository },
+        {
+          // https://github.com/nestjs/azure-database/issues/830
+          provide: `DeviceAzureCosmosDbModel`,
+          useValue: jest.mocked({}),
+        },
       ],
     }).compile();
 
