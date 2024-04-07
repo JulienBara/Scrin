@@ -12,11 +12,11 @@ export class AuthService {
   async signIn(username: string, pass: string): Promise<any> {
     const user: any = await this.gaufresService.findOne(username);
     // if (check password here) {
-    if (true) {
+    if (false) {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.userId, username: user.username };
+    const payload = { sub: 'x', username: 'y' };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
