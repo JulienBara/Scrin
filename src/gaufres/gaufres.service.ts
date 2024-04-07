@@ -10,6 +10,24 @@ export class GaufresService {
     private readonly devicesContainer: Container,
   ) {}
 
+  async findOne(username: string): Promise<Gaufre | undefined> {
+    const querySpec = {
+      query: 'SELECT * FROM Gaufres g WHERE g.username = @username',
+      parameters: [
+        {
+          name: '@username',
+          value: username,
+        },
+      ],
+    };
+
+    const { resources: gaufres } = await this.devicesContainer.items
+      .query<Gaufre>(querySpec)
+      .fetchAll();
+
+    return gaufres.length >= 1 ? gaufres[0] : undefined;
+  }
+
   async fetchTodaysGaufres() {
     const today = new Date();
     today.setUTCHours(0, 0, 0);
