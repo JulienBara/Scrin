@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -16,6 +17,10 @@ describe('AuthController', () => {
         },
         {
           provide: JwtService,
+          useValue: jest.mocked({}),
+        },
+        {
+          provide: ConfigService,
           useValue: jest.mocked({}),
         },
       ],
