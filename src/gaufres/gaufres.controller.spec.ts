@@ -13,7 +13,7 @@ describe('GaufresController', () => {
           provide: GaufresService,
           useValue: jest.mocked({}),
         },
-      ]
+      ],
     }).compile();
 
     controller = module.get<GaufresController>(GaufresController);
