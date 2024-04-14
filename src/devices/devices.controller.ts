@@ -4,7 +4,7 @@ import { Device } from './devices.entity';
 import { DeviceDTO } from './devices.dto';
 import { InjectModel } from '@nestjs/azure-database';
 import { GaufresService } from '../gaufres/gaufres.service';
-import { Public } from 'src/auth';
+import { Public } from '../auth';
 
 @Controller('devices')
 export class DevicesController {

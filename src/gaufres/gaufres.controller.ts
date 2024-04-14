@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { GaufresService } from './gaufres.service';
-import { Public } from 'src/auth';
+import { Public } from '../auth';
 
 @Controller('gaufres')
 export class GaufresController {
