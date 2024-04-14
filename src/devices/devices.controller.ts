@@ -4,6 +4,7 @@ import { Device } from './devices.entity';
 import { DeviceDTO } from './devices.dto';
 import { InjectModel } from '@nestjs/azure-database';
 import { GaufresService } from '../gaufres/gaufres.service';
+import { Public } from 'src/auth';
 
 @Controller('devices')
 export class DevicesController {
@@ -14,6 +15,7 @@ export class DevicesController {
   ) {}
 
   @Post('heartbeat')
+  @Public()
   async heartbeatDevice(@Body() deviceDto: DeviceDTO): Promise<void> {
     await this.devicesContainer.items.upsert<Device>({
       id: deviceDto.address,

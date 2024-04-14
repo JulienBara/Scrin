@@ -4,6 +4,8 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { GaufresModule } from '../gaufres/gaufres.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth.guard';
 
 @Module({
   imports: [
@@ -21,6 +23,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, ConfigService],
+  providers: [
+    AuthService,
+    ConfigService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AuthModule {}
