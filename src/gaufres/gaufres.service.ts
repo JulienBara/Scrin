@@ -49,7 +49,13 @@ export class GaufresService {
     return gaufres;
   }
 
-  async heartbeatGaufre(deviceAddress): Promise<void> {
+  async updateGaufre(gaufre: Gaufre): Promise<void> {
+    await this.devicesContainer
+      .item(gaufre.id, gaufre.id)
+      .replace<Gaufre>(gaufre);
+  }
+
+  async heartbeatGaufre(deviceAddress: string): Promise<void> {
     const querySpec = {
       query: 'SELECT * FROM Gaufres g WHERE g.deviceAddress = @deviceAddress',
       parameters: [
